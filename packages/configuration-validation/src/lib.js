@@ -28,13 +28,15 @@ const hasDomainTypo = new RegExp('(.com.com)|(://.*){2,}');
 const endsInPath = new RegExp('/$');
 
 configUtil.buildConfigObject = (config) => {
+  var disableHttpsCheck = config.testing ? config.testing.disableHttpsCheck : false;
   return {
     clientId: config.clientId || config.client_id,
     issuer: config.issuer,
     redirectUri: config.redirectUri || config.redirect_uri,
     tokenManager: {
       storage: config.storage,
-      autoRenew: config.autoRenew || config.auto_renew
+      autoRenew: config.autoRenew || config.auto_renew,
+      secure: !disableHttpsCheck
     }
   }
 }

@@ -23,12 +23,15 @@ const containsAuthTokens = /id_token|access_token|code/;
 
 export default class Auth {
   constructor(config) {
-    const testing = {
-      // If the config is undefined, cast it to false
-      disableHttpsCheck: !!config.disableHttpsCheck
-    };
+    var testing = config.testing;
+    if (!testing) {
+      config.testing = {
+        // If the config is undefined, cast it to false
+        disableHttpsCheck: !!config.disableHttpsCheck
+      };
+    }
 
-    assertIssuer(config.issuer, testing);
+    assertIssuer(config.issuer, config.testing);
     assertClientId(config.client_id);
     assertRedirectUri(config.redirect_uri);
     this._oktaAuth = new OktaAuth(buildConfigObject(config));

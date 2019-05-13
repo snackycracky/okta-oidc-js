@@ -31,7 +31,8 @@ describe('Configuration Validation', () => {
         redirectUri: '{redirectUri}',
         tokenManager: {
           storage: '{storage}',
-          autoRenew: '{autoRenew}'
+          autoRenew: '{autoRenew}',
+          secure: true
         }
       });
     });
@@ -51,7 +52,8 @@ describe('Configuration Validation', () => {
         redirectUri: '{redirect_uri}',
         tokenManager: {
           storage: '{storage}',
-          autoRenew: '{auto_renew}'
+          autoRenew: '{auto_renew}',
+          secure: true
         }
       });
     });
@@ -74,9 +76,38 @@ describe('Configuration Validation', () => {
         redirectUri: '{redirectUri}',
         tokenManager: {
           storage: '{storage}',
-          autoRenew: '{autoRenew}'
+          autoRenew: '{autoRenew}',
+          secure: true
         }
       });
+    });
+  });
+
+  describe('secure cookies', () => {
+    it('sets secure cookie setting to "true" by default', () => {
+      var passedConfig = {};
+      var config = buildConfigObject(passedConfig);
+      expect(config.tokenManager.secure).toBe(true);
+    });
+
+    it('sets secure cookies to "false" if testing.disableHttpsCheck is "true"', () => {
+      var passedConfig = {
+        testing: {
+          disableHttpsCheck: true
+        }
+      };
+      var config = buildConfigObject(passedConfig);
+      expect(config.tokenManager.secure).toBe(false);
+    });
+
+    it('sets secure cookies to "true" if testing.disableHttpsCheck is "false"', () => {
+      var passedConfig = {
+        testing: {
+          disableHttpsCheck: false
+        }
+      };
+      var config = buildConfigObject(passedConfig);
+      expect(config.tokenManager.secure).toBe(true);
     });
   });
 
