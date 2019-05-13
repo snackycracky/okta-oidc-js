@@ -23,12 +23,13 @@ const containsAuthTokens = /id_token|access_token|code/;
 
 export default class Auth {
   constructor(config) {
-    var testing = config.testing;
-    if (!testing) {
-      config.testing = {
-        // If the config is undefined, cast it to false
-        disableHttpsCheck: !!config.disableHttpsCheck
-      };
+    if (!config.testing) {
+      config = Object.assign({}, config, {
+        testing: {
+          // If the config is undefined, cast it to false
+          disableHttpsCheck: !!config.disableHttpsCheck
+        },
+      });
     }
 
     assertIssuer(config.issuer, config.testing);
