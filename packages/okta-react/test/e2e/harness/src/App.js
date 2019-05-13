@@ -22,13 +22,15 @@ if (!Auth) {
   throw new Error('Auth should be defined');
 }
 
+// See config-overrides.js
+/* global ISSUER, SPA_CLIENT_ID */
 class App extends Component {
   render() {
     return (
       <React.StrictMode>
         <Router>
-          <Security issuer={process.env.REACT_APP_ISSUER}
-                    client_id={process.env.REACT_APP_CLIENT_ID}
+          <Security issuer={ISSUER}
+                    client_id={SPA_CLIENT_ID}
                     disableHttpsCheck={true}
                     redirect_uri={window.location.origin + '/implicit/callback'}
                     onAuthRequired={({history}) => history.push('/login')}>
