@@ -230,6 +230,10 @@ describe('Configuration Validation', () => {
       const errorMsg = `Your redirect URI must start with https. Current value: http://foo.com.`;
       expect(() => assertRedirectUri('http://foo.com')).toThrow(errorMsg);
     });
+
+    it('should not throw if redirectUri is localhost', () => {
+      expect(() => assertRedirectUri('http://localhost/callback')).not.toThrow();
+    });
   });
 
   describe('assertAppBaseUrl', () => { 
@@ -271,6 +275,10 @@ describe('Configuration Validation', () => {
     it('should throw if a appBaseUrl that does not contain https is provided', () => {
       const errorMsg = `Your app base URL must start with https. Current value: http://foo.com.`;
       expect(() => assertAppBaseUrl('http://foo.com')).toThrow(errorMsg);
+    });
+
+    it('should not throw if appBaseUrl is localhost', () => {
+      expect(() => assertAppBaseUrl('http://localhost')).not.toThrow();
     });
   });
 

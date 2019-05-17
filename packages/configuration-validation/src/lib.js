@@ -21,6 +21,7 @@ const copyCredentialsMessage = 'You can copy it from the Okta Developer Console 
   'in the details for the Application you created. ' +
   `Follow these instructions to find it: ${findAppCredentialsURL}`;
 
+const isLocal = new RegExp('^http://localhost');
 const isHttps = new RegExp('^https://');
 const hasProtocol = new RegExp('://');
 const hasDomainAdmin = /-admin.(okta|oktapreview|okta-emea).com/;
@@ -28,6 +29,7 @@ const hasDomainTypo = new RegExp('(.com.com)|(://.*){2,}');
 const endsInPath = new RegExp('/$');
 
 configUtil.buildConfigObject = (config) => {
+  debugger;
   var disableHttpsCheck = config.testing ? config.testing.disableHttpsCheck : false;
   return {
     clientId: config.clientId || config.client_id,
@@ -105,7 +107,7 @@ configUtil.assertRedirectUri = (redirectUri, testing = {}) => {
     throw new ConfigurationValidationError('Replace {redirectUri} with the redirect URI of your Application.');
   }
 
-  if (!testing.disableHttpsCheck && !redirectUri.match(isHttps)) {
+  if (!testing.disableHttpsCheck && !redirectUri.match(isLocal) && !redirectUri.match(isHttps)) {
     throw new ConfigurationValidationError(
       'Your redirect URI must start with https. ' +
       `Current value: ${redirectUri}.`
@@ -131,7 +133,7 @@ configUtil.assertAppBaseUrl = (appBaseUrl, testing = {}) => {
     throw new ConfigurationValidationError(`Your appBaseUrl must not end in a '/'. Current value: ${appBaseUrl}.`);
   } 
 
-  if (!testing.disableHttpsCheck && !appBaseUrl.match(isHttps)) {
+  if (!testing.disableHttpsCheck && !appBaseUrl.match(isLocal) && !appBaseUrl.match(isHttps)) {
     throw new ConfigurationValidationError(
       'Your app base URL must start with https. ' +
       `Current value: ${appBaseUrl}.`
