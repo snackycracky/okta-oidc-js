@@ -41,7 +41,7 @@ export class OktaAuthService {
       // Assert Configuration
       assertIssuer(auth.issuer, auth.testing);
       assertClientId(auth.clientId);
-      assertRedirectUri(auth.redirectUri)
+      assertRedirectUri(auth.redirectUri, auth.testing)
 
       this.observers = [];
 

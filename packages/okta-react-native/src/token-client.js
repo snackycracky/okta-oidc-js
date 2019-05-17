@@ -27,7 +27,7 @@ export default class TokenClient {
     // Assert configuration
     assertIssuer(config.issuer, config.testing);
     assertClientId(config.client_id);
-    assertRedirectUri(config.redirect_uri);
+    assertRedirectUri(config.redirect_uri, config.testing);
 
     this.issuer = config.issuer;
     this.authorization_endpoint = config.authorization_endpoint;

@@ -34,7 +34,7 @@ export default class Auth {
 
     assertIssuer(config.issuer, config.testing);
     assertClientId(config.client_id);
-    assertRedirectUri(config.redirect_uri);
+    assertRedirectUri(config.redirect_uri, config.testing);
     this._oktaAuth = new OktaAuth(buildConfigObject(config));
     this._oktaAuth.userAgent = `${packageInfo.name}/${packageInfo.version} ${this._oktaAuth.userAgent}`;
     this._config = config;

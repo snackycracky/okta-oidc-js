@@ -54,6 +54,12 @@ Assert that a valid `redirectUri` was provided.
 
 ```javascript
 assertRedirectUri('https://example.com/callback');
+
+// Ignore HTTPS requirement for testing
+assertRedirectUri('http://localhost:8080/', {
+  disableHttpsCheck: true
+});
+
 ```
 
 ### assertAppBaseUrl(appBaseUrl)
@@ -62,4 +68,10 @@ Assert that a valid `appBaseUrl` was provided.
 
 ```javascript
 assertAppBaseUrl('https://example.com');
+
+// Ignore HTTPS requirement for testing
+assertAppBaseUrl('http://localhost:8080/', {
+  disableHttpsCheck: true
+});
+
 ```

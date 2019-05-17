@@ -210,6 +210,26 @@ describe('Configuration Validation', () => {
       const errorMsg = 'Replace {redirectUri} with the redirect URI of your Application.'
       expect(() => assertRedirectUri('{redirectUri}')).toThrow(errorMsg);
     });
+
+    it('should not throw if a valid redirect_uri is  provided', () => {
+      expect(() => assertRedirectUri('https://foo')).not.toThrow();
+    });
+
+    it('should give warning if https validation is skipped', () => {
+      jest.spyOn(console, 'warn').mockImplementation(() => {}); // silence for testing
+      expect(() => {
+        assertRedirectUri('http://foo.com', {
+          disableHttpsCheck: true
+        })
+      }).not.toThrow();
+      /* eslint-disable-next-line no-console */
+      expect(console.warn).toBeCalledWith('Warning: HTTPS check is disabled. This allows for insecure configurations and is NOT recommended for production use.');
+    });
+
+    it('should throw if a redirectUri that does not contain https is provided', () => {
+      const errorMsg = `Your redirect URI must start with https. Current value: http://foo.com.`;
+      expect(() => assertRedirectUri('http://foo.com')).toThrow(errorMsg);
+    });
   });
 
   describe('assertAppBaseUrl', () => { 
@@ -228,9 +248,29 @@ describe('Configuration Validation', () => {
       expect(() => assertAppBaseUrl('foo.example.com')).toThrow(errorMsg);
     });
 
+    it('should not throw if a valid appBaseUrl is  provided', () => {
+      expect(() => assertAppBaseUrl('https://foo')).not.toThrow();
+    });
+
     it('should throw if an appBaseUrl that ends in a slash is provided', () => {
       const errorMsg = `Your appBaseUrl must not end in a '/'. Current value: https://foo.example.com/.`;
       expect(() => assertAppBaseUrl('https://foo.example.com/')).toThrow(errorMsg);
+    });
+
+    it('should give warning if https validation is skipped', () => {
+      jest.spyOn(console, 'warn').mockImplementation(() => {}); // silence for testing
+      expect(() => {
+        assertAppBaseUrl('http://foo.com', {
+          disableHttpsCheck: true
+        })
+      }).not.toThrow();
+      /* eslint-disable-next-line no-console */
+      expect(console.warn).toBeCalledWith('Warning: HTTPS check is disabled. This allows for insecure configurations and is NOT recommended for production use.');
+    });
+
+    it('should throw if a appBaseUrl that does not contain https is provided', () => {
+      const errorMsg = `Your app base URL must start with https. Current value: http://foo.com.`;
+      expect(() => assertAppBaseUrl('http://foo.com')).toThrow(errorMsg);
     });
   });
 

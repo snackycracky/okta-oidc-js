@@ -96,7 +96,7 @@ const initConfig = auth => {
   // Assert configuration
   assertIssuer(auth.issuer, auth.testing)
   assertClientId(auth.client_id)
-  assertRedirectUri(auth.redirect_uri)
+  assertRedirectUri(auth.redirect_uri, auth.testing)
 
   if (!auth.scope) auth.scope = 'openid'
 

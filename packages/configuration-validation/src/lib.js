@@ -91,15 +91,36 @@ configUtil.assertClientSecret = (clientSecret) => {
   }
 };
 
-configUtil.assertRedirectUri = (redirectUri) => {
+configUtil.assertRedirectUri = (redirectUri, testing = {}) => {
+  if (testing.disableHttpsCheck) {
+    const httpsWarning = 'Warning: HTTPS check is disabled. ' +
+      'This allows for insecure configurations and is NOT recommended for production use.';
+    /* eslint-disable-next-line no-console */
+    console.warn(httpsWarning);
+  }
+
   if (!redirectUri) {
     throw new ConfigurationValidationError('Your redirect URI is missing.');
   } else if (redirectUri.match(/{redirectUri}/)) {
     throw new ConfigurationValidationError('Replace {redirectUri} with the redirect URI of your Application.');
   }
+
+  if (!testing.disableHttpsCheck && !redirectUri.match(isHttps)) {
+    throw new ConfigurationValidationError(
+      'Your redirect URI must start with https. ' +
+      `Current value: ${redirectUri}.`
+    );
+  }
 };
 
-configUtil.assertAppBaseUrl = (appBaseUrl) => { 
+configUtil.assertAppBaseUrl = (appBaseUrl, testing = {}) => {
+  if (testing.disableHttpsCheck) {
+    const httpsWarning = 'Warning: HTTPS check is disabled. ' +
+      'This allows for insecure configurations and is NOT recommended for production use.';
+    /* eslint-disable-next-line no-console */
+    console.warn(httpsWarning);
+  }
+
   if (!appBaseUrl) { 
     throw new ConfigurationValidationError('Your appBaseUrl is missing.');
   } else if (appBaseUrl.match(/{appBaseUrl}/)) {
@@ -109,4 +130,11 @@ configUtil.assertAppBaseUrl = (appBaseUrl) => {
   } else if (appBaseUrl.match(endsInPath)) {
     throw new ConfigurationValidationError(`Your appBaseUrl must not end in a '/'. Current value: ${appBaseUrl}.`);
   } 
+
+  if (!testing.disableHttpsCheck && !appBaseUrl.match(isHttps)) {
+    throw new ConfigurationValidationError(
+      'Your app base URL must start with https. ' +
+      `Current value: ${appBaseUrl}.`
+    );
+  }
 };
