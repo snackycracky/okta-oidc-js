@@ -189,7 +189,7 @@ describe('Auth component', () => {
     localVue.use(Auth, {
       issuer: 'https://foo',
       client_id: 'foo',
-      redirect_uri: 'foo'
+      redirect_uri: 'https://foo'
     })
     expect(mockAuthJsInstance.userAgent).toMatch(expectedUserAgent)
   })
@@ -198,7 +198,7 @@ describe('Auth component', () => {
     localVue.use(Auth, {
       issuer: 'https://foo',
       client_id: 'foo',
-      redirect_uri: 'foo'
+      redirect_uri: 'https://foo'
     })
     localVue.prototype.$auth.loginRedirect()
     const mockCallValues = mockAuthJsInstance.token.getWithRedirect.mock.calls[0][0]
@@ -210,7 +210,7 @@ describe('Auth component', () => {
     localVue.use(Auth, {
       issuer: 'https://foo',
       client_id: 'foo',
-      redirect_uri: 'foo',
+      redirect_uri: 'https://foo',
       scope: 'foo bar',
       response_type: 'token'
     })
@@ -224,7 +224,7 @@ describe('Auth component', () => {
     localVue.use(Auth, {
       issuer: 'https://foo',
       client_id: 'foo',
-      redirect_uri: 'foo',
+      redirect_uri: 'https://foo',
       scope: 'foo bar',
       response_type: 'token'
     })
@@ -237,7 +237,7 @@ describe('Auth component', () => {
     localVue.use(Auth, {
       issuer: 'https://foo',
       client_id: 'foo',
-      redirect_uri: 'foo',
+      redirect_uri: 'https://foo',
       scope: 'foo bar',
       response_type: 'token'
     })
@@ -253,7 +253,7 @@ describe('Auth component', () => {
     localVue.use(Auth, {
       issuer: 'https://foo',
       client_id: 'foo',
-      redirect_uri: 'foo',
+      redirect_uri: 'https://foo',
       scope: 'foo bar',
       response_type: 'token'
     })
