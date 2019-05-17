@@ -29,7 +29,6 @@ const hasDomainTypo = new RegExp('(.com.com)|(://.*){2,}');
 const endsInPath = new RegExp('/$');
 
 configUtil.buildConfigObject = (config) => {
-  debugger;
   var disableHttpsCheck = config.testing ? config.testing.disableHttpsCheck : false;
   return {
     clientId: config.clientId || config.client_id,
