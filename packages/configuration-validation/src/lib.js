@@ -29,6 +29,9 @@ const endsInPath = new RegExp('/$');
 
 configUtil.buildConfigObject = (config) => {
   return {
+    authorizeUrl: config.authorizeUrl,
+    userinfoUrl: config.userinfoUrl,
+    tokenUrl: config.tokenUrl,
     clientId: config.clientId || config.client_id,
     issuer: config.issuer,
     redirectUri: config.redirectUri || config.redirect_uri,
@@ -36,8 +39,8 @@ configUtil.buildConfigObject = (config) => {
       storage: config.storage,
       autoRenew: config.autoRenew || config.auto_renew
     }
-  }
-}
+  };
+};
 
 configUtil.assertIssuer = (issuer, testing = {}) => {
   const copyMessage = 'You can copy your domain from the Okta Developer ' +
